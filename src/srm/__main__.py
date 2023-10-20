@@ -1,11 +1,10 @@
-#!/usr/bin/env python3
-"""SRM - Simple Regex Matcher
+"""SRM - Simple Regex Matcher.
 
 Purposefully simple CLI tool to match regex pattern against every line in a
 given file or all files in a given directory recursively.
 
 Typical usage:
-    $ srm ./ '(# TODO.*)' -I '^(.git).*' '.*(.venv).*' 
+    $ srm ./ '(# TODO.*)' -I '^(.git).*' '.*(.venv).*'
     $ srm ./README.md '.*f[oif]o'
 """
 
@@ -18,7 +17,7 @@ import pathlib
 def match_pattern(filepath: str, regex: str):
     """Search for regex in file.
 
-    Match regex pattern agains every line in given file.
+    Match regex pattern against every line in given file.
 
     Args:
         filepath:   Path of file to search for regex in.
@@ -34,13 +33,13 @@ def match_pattern(filepath: str, regex: str):
                     lambda x_y: list(
                         map(
                             lambda match: print(
-                                f"{filepath}:{x_y[0]}: \033[92m{match}\033[0m"
+                                f"{filepath}:{x_y[0]}: \033[92m{match}\033[0m",
                             ),
                             regex_obj.findall(x_y[1]),
-                        )
+                        ),
                     ),
                     enumerate(handle, 1),
-                )
+                ),
             )
     # Ignore errors from trying to read binary files.
     except UnicodeDecodeError:
@@ -76,7 +75,10 @@ def main():
 
     Parse cli arguments and start pattern matching accordingly.
     """
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.RawTextHelpFormatter,
+    )
     parser.add_argument("path", help="Path of file or directory to search in.")
     parser.add_argument("regex", help="Regex to search for in file[s].")
     parser.add_argument(
@@ -95,7 +97,7 @@ def main():
             map(
                 lambda x: match_pattern(x, args.regex),
                 find_files(args.path, args.exclude),
-            )
+            ),
         )
     else:
         print(

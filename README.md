@@ -15,8 +15,8 @@ pip install .
 
 ```bash
 # Search for regex in all files in current dir/subdirs ignoring .git/.venv.
-srm ./ '(# TODO.*)' -I '^(.git).*' '.*(.venv).*' 
+srm ./ '(# TODO.*)' -I '^(.git).*' '.*(.venv).*'
 
-# Serach for regex in ./README.md only.
+# Search for regex in ./README.md only.
 srm ./README.md '.*f[oif]o'
 ```
